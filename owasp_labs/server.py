@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 from handlers import (
     llm01_chat,
     llm01_indirect_chat,
@@ -48,6 +49,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Mount static files
+app.mount("/static", StaticFiles(directory="static_files"), name="static")
 
 # Serve static index.html at root
 @app.get("/")
